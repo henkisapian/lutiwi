@@ -7,7 +7,7 @@ on:
 
 jobs:
   gpu-job:
-    runs-on: self-hosted, linux, x64, gpu
+    runs-on: [runs-on,runner=gpu-nvidia]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
