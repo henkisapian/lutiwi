@@ -7,7 +7,7 @@ on:
 
 jobs:
   gpu-job:
-    runs-on: self-hosted  # Menggunakan self-hosted runner
+    runs-on: [self-hosted, linux, x64, gpu]
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
