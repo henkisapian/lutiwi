@@ -1,0 +1,27 @@
+name: GPU Workflow
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  gpu-job:
+    runs-on: self-hosted  # Menggunakan self-hosted runner
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Set Up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'
+
+      - name: Install Dependencies
+        run: |
+          pip install torch torchvision
+          pip install -r requirements.txt
+
+      - name: Run GPU Task
+        run: |
+          python train_model.py
