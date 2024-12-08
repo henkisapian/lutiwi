@@ -1,27 +1,28 @@
-name: GPU Workflow
+name: Machine Learning Job
 
 on:
+  workflow_dispatch:
   push:
-    branches:
-      - main
+    paths:
+      - .github/workflows/machine-learning-job.yml
 
 jobs:
-  gpu-job:
+  default:
     runs-on: [runs-on,runner=gpu-nvidia]
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v3
-
-      - name: Set Up Python
-        uses: actions/setup-python@v4
+      - uses: actions/setup-node@v4
         with:
-          python-version: '3.8'
-
-      - name: Install Dependencies
+          node-version: 20
+      - name: Display environment details
+        run: npx envinfo
+      - name: Display block storage
+        run: sudo lsblk -l
+      - name: Display NVIDIA SMI details
         run: |
-          pip install torch torchvision
-          pip install -r requirements.txt
-
-      - name: Run GPU Task
-        run: |
-          python train_model.py
+          nvidia-smi
+          nvidia-smi -L
+          nvidia-smi -q -d Memory
+      - name: Ensure Docker is available
+        run: docker run hello-world
+      - name: Execute your machine learning script
+        run: echo "Running ML script..."
